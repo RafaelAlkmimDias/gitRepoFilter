@@ -37,7 +37,7 @@ const Paggination = ({direction, sort, page, maxPage, per_page, paggination, sub
     }
 
     const updateNumberOfPages = () => {
-        let pageNumber = Math.ceil(repoTotal/per_page)
+        let pageNumber = Math.ceil(repoTotal/per_page) >= 1 ? Math.ceil(repoTotal/per_page) : 1
         updateState({ maxPage: pageNumber, page:1 }, dispatch)
     }
 
