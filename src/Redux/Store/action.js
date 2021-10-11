@@ -1,17 +1,20 @@
 
-export const changeInput = (key, value) => {
-    let change = {};
-    change[key] = value;
-    return{
+export const changeInput = (e, dispatch) => {
+    const obj ={
         type: 'CHANGE_INPUT',
-        change: change
+        change:{}
     }
+    obj['change'][e.target.name] = e.target.value;
+    
+    dispatch(obj);
 }
 
-export const submitFilter = () => {
-    return{
+export const submitFilter = (dispatch) => {
+    const obj = {
         type: 'SUBMIT_FILTER'
     };
+
+    dispatch(obj);
 }
 
 export const submitedFilter = () => {

@@ -1,34 +1,32 @@
 import React from 'react'
-import {Wrapper, Button, WrapperInput, InputLabel, Input, Select, WrapperData, WrapperSelect} from './style';
+import {Button, WrapperInput, InputLabel, Input, WrapperData} from './style';
+import { CardWrapper } from '../style'
+import SelectForm from '../SelectForm';
 
 import { connect } from 'react-redux';
 import { submitFilter, changeInput } from '../../Redux/Store/action'
 
 const Filter = ({ filter, filterText, dispatch }) => {
 
-    const onTextChange = (e) => {
-        dispatch(changeInput(e.target.name, e.target.value))
-    }
-    const onSelectChange = (e) => {
-        dispatch(changeInput(e.target.name, e.target.value))
-    }
+    const filterOptions = [
+        {value: "orgs", name:'Organização'},
+        {value: "users", name:'Usuário'},
+    ]
 
-    const submit = () => {
-        dispatch(submitFilter())
+    const change = (e) => { 
+        changeInput(e, dispatch) 
     }
 
     return(
-        <Wrapper>
+        <CardWrapper>
             <WrapperData>
-                <WrapperSelect>
-                    <InputLabel htmlFor="filter">
-                        Pesquisar por:
-                    </InputLabel>
-                    <Select name="filter" id="filter" onChange={onSelectChange} value={filter}>
-                        <option value="orgs"> Organização </option>
-                        <option value="users"> Usuário </option>
-                    </Select>
-                </WrapperSelect>
+                <SelectForm
+                    label="Pesquisar por:"
+                    name="filter"
+                    value={filter}
+                    options={filterOptions}
+                    change={change}
+                />
 
                 <WrapperInput>
                     <InputLabel htmlFor="filterText">
@@ -39,15 +37,15 @@ const Filter = ({ filter, filterText, dispatch }) => {
                         name="filterText"
                         id="filterText"
                         value={filterText}
-                        onChange={onTextChange}
+                        onChange={(e) => changeInput(e, dispatch)}
                     />
                 </WrapperInput>
             </WrapperData>
-            <Button onClick={() => submit() } >
+            <Button onClick={() => submitFilter(dispatch) } >
                 Pesquisar    
             </Button>
 
-        </Wrapper>
+        </CardWrapper>
     )
 }
 

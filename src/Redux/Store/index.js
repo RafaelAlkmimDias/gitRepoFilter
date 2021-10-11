@@ -4,6 +4,11 @@ const initialState = {
     submit: false,
     filter: 'orgs',
     filterText: '',
+    page: 0,
+    maxPage: 3,
+    order: 'crescente',
+    orderBy: 'name',
+    nPage: 10,
 }
 
 function reducer (state = initialState, action) {
