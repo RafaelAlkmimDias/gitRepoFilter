@@ -5,6 +5,8 @@ import RepoCards from '../RepoCards';
 import { connect } from 'react-redux';
 import { submitedFilter } from '../../Redux/Store/action'
 
+import { Wrapper } from './style'
+
 const RepoList = ({ submit, filter, filterText, dispatch }) => {
 
     const [list, setList] = useState([]);
@@ -19,14 +21,14 @@ const RepoList = ({ submit, filter, filterText, dispatch }) => {
         if(submit){
             updateList()
         }
-    }, [submit])
+    }, [ submit ])
 
     return (
-        <div>
+        <Wrapper>
             {list.map(item => (
-                <RepoCards item={item} />
+                <RepoCards item={item} key={item.id}/>
             ))}
-        </div>
+        </Wrapper>
     )
 
 }
