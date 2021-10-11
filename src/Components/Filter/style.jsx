@@ -29,6 +29,9 @@ export const WrapperInput = styled.div`
 export const InputLabel = styled.label`
     display: block;
     line-height: 28px;
+    @media(max-width: 640px) {
+        line-height: 20px;
+    }
 `;
 
 export const Input = styled.input`

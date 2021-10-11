@@ -4,12 +4,16 @@ export const WrapperSelect = styled.div`
     padding: 0px 0px 8px 0px;
     @media(max-width: 640px) {
         width: 100%;
+        padding: 0px!important;
     }
 `;
 
 export const InputLabel = styled.label`
     display: block;
     line-height: 28px;
+    @media(max-width: 640px) {
+        line-height: 20px;
+    }
 `;
 
 export const Select = styled.select`

@@ -6,13 +6,13 @@ const PageWrapper = ({ children }) => {
     return (
         <>
             <Header>
-                    Pesquisas por repositório
+                    Pesquisar repositório
             </Header>
             <ContentWrapper>
                 {children}
             </ContentWrapper>
             <Footer>
-                2021
+                Desenvolvido por Rafael em 2021
             </Footer>
         </>
     )

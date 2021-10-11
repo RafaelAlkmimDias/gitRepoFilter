@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Button, WrapperInput, InputLabel, Input, WrapperData} from './style';
 import { CardWrapper } from '../style'
 import SelectForm from '../SelectForm';
@@ -13,8 +13,20 @@ const Filter = ({ filter, filterText, dispatch }) => {
         {value: "users", name:'Usuário'},
     ]
 
+    const [value, setValue] = useState({
+        filter: filter,
+        filterText: filterText
+    })
+
+    const submit = () => {
+        submitFilter(value, dispatch)
+    }
+
     const change = (e) => { 
-        changeInput(e, dispatch) 
+        setValue({
+            ...value,
+            [e.target.name]: e.target.value
+        })
     }
 
     return(
@@ -23,7 +35,7 @@ const Filter = ({ filter, filterText, dispatch }) => {
                 <SelectForm
                     label="Pesquisar por:"
                     name="filter"
-                    value={filter}
+                    value={value.filter}
                     options={filterOptions}
                     change={change}
                 />
@@ -36,12 +48,12 @@ const Filter = ({ filter, filterText, dispatch }) => {
                         type="text" 
                         name="filterText"
                         id="filterText"
-                        value={filterText}
-                        onChange={(e) => changeInput(e, dispatch)}
+                        value={value.filterText}
+                        onChange={change}
                     />
                 </WrapperInput>
             </WrapperData>
-            <Button onClick={() => submitFilter(dispatch) } >
+            <Button onClick={submit} >
                 Pesquisar    
             </Button>
 

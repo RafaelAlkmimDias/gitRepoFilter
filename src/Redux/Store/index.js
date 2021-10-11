@@ -4,11 +4,12 @@ const initialState = {
     submit: false,
     filter: 'orgs',
     filterText: '',
+    paggination: false,
     page: 0,
-    maxPage: 3,
-    order: 'crescente',
-    orderBy: 'name',
-    nPage: 10,
+    maxPage: 1,
+    direction: 'asc',
+    sort: 'full_name',
+    per_page: 10,
 }
 
 function reducer (state = initialState, action) {
@@ -22,6 +23,8 @@ function reducer (state = initialState, action) {
     else if(action.type === 'SUBMIT_FILTER'){
         return {
             ...state,
+            ...action.change,
+            page: 1,
             submit: true
         }
     }
@@ -29,6 +32,12 @@ function reducer (state = initialState, action) {
         return {
             ...state,
             submit: false
+        }
+    }
+    else if(action.type === 'UPDATE_STATE'){
+        return {
+            ...state,
+            ...action.update
         }
     }
 
