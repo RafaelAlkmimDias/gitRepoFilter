@@ -4,7 +4,7 @@ import RepoCards from '../RepoCards';
 import { connect } from 'react-redux';
 import { submitedFilter, updateState } from '../../Redux/Store/action'
 import { Wrapper } from './style'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FaSpinner } from 'react-icons/fa';
 
 
 const RepoList = ({ 
@@ -29,23 +29,17 @@ const RepoList = ({
         let newList = await getRepoList(filter, filterText, pagginationParameter);
         setLoading(false)
         setList(newList);
-        let hasRepo = Boolean(newList.length)
-        updateState({ paggination: hasRepo}, dispatch)
-        submitedFilter(dispatch)
-        setSubmited(true)
-    }
-    
-
-    useEffect(() => {
         if(submit){
-            updateList()
+            submitedFilter(dispatch)
+            setSubmited(true)
         }
-    }, [ submit ])
+    }
 
-    useEffect(() => { updateList(); }, [page, direction, sort, per_page])
+    useEffect(() => { if(submit){ updateList(); } }, [submit])
+    useEffect(() => { if(submited){ updateList(); } }, [page, direction, sort, per_page])
 
     const status = () => {
-        if(loading) {return (<FontAwesomeIcon icon="spinner" spin />)}
+        if(loading) {return (<FaSpinner icon="spinner" className="spinner" style={{fontSize:'40px'}}/>)}
         else if(submited){ return "Não foi encontrado nenhum repositório"}
     }
 
@@ -59,7 +53,7 @@ const RepoList = ({
                 :
                 (
                     <div style={{textAlign: 'center', lineHeight: '100px'}}>
-                        {status}
+                        {status()}
                     </div>
                 )
             }

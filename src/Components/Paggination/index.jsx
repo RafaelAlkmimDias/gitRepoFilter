@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { changeInput, updateState } from '../../Redux/Store/action'
 import { getRepoTotalNumber } from '../../Services/api'
 
-const Paggination = ({direction, sort, page, maxPage, per_page, paggination, submit, filter, filterText, dispatch}) => {
+const Paggination = ({direction, sort, page, maxPage, per_page, submit, filter, filterText, dispatch}) => {
 
     const ordernarOptions = [
         {value: 'full_name', name: 'Nome'},
@@ -26,6 +26,7 @@ const Paggination = ({direction, sort, page, maxPage, per_page, paggination, sub
 
     
     const [repoTotal, setRepoTotal] = useState(0)
+    const [showPaggination, setShowPaggination] = useState(false)
 
     const change = (e) => { 
         changeInput(e, dispatch) 
@@ -34,6 +35,7 @@ const Paggination = ({direction, sort, page, maxPage, per_page, paggination, sub
     const updateRepoTotal = async() => {
         let number = await getRepoTotalNumber(filter, filterText)
         setRepoTotal(number)
+        setShowPaggination(Boolean(number));
     }
 
     const updateNumberOfPages = () => {
@@ -42,12 +44,12 @@ const Paggination = ({direction, sort, page, maxPage, per_page, paggination, sub
     }
 
     useEffect( () => { if(submit){ updateRepoTotal() } },[submit])
-    useEffect( () => { updateNumberOfPages() },[per_page])
+    useEffect( () => { updateNumberOfPages() },[repoTotal,per_page])
     
 
     return (
         <>
-            {paggination &&
+            {showPaggination &&
                 (<CardWrapperRow>
                     <Row>
                         <SelectForm
@@ -95,7 +97,6 @@ export default connect( state => ({
     page: state.page, 
     maxPage: state.maxPage,
     per_page: state.per_page,
-    paggination: state.paggination,
     submit: state.submit,
     filter: state.filter,
     filterText: state.filterText,
