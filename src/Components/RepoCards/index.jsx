@@ -10,9 +10,9 @@ const RepoCards = ({ item }) => {
     return(
         <Wrapper>
             <FirstLine>
-                <Link to={item.html_url}>
+                <a href={item.html_url}>
                     {item.name}
-                </Link>
+                </a>
                 <div>
                     <FontAwesomeIcon icon={faStar} color='#b4b4b4'/>
                     {item.stargazers_count}
