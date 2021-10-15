@@ -10,4 +10,4 @@ npm run start
 
 para inicializar o projeto
 
-o projeto pode ser visualizado em https://git-repo-filter-nt6c9c15v-rafaelalkmimdias.vercel.app/
+o projeto pode ser visualizado em https://git-repo-filter-ezcxqa3v0-rafaelalkmimdias.vercel.app/
