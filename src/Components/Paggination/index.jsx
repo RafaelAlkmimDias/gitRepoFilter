@@ -4,15 +4,21 @@ import { CardWrapperRow, Row } from '../style'
 
 import { connect } from 'react-redux';
 import { changeInput, updateState } from '../../Redux/Store/action'
-import { getRepoTotalNumber } from '../../Services/api'
+import { getRepoTotalNumber, getRepoTotalNumberLanguage } from '../../Services/api'
 
-const Paggination = ({direction, sort, page, maxPage, per_page, submit, filter, filterText, dispatch}) => {
+const Paggination = ({direction, sort, page, maxPage, per_page, submit, filter, filterText,language, dispatch}) => {
 
-    const ordernarOptions = [
+    const ordernarOptions = filter !== 'language' ?[
         {value: 'full_name', name: 'Nome'},
         {value: 'updated', name: 'Commit'},
         {value: 'created', name: 'Criação'},
-    ]
+    ] :
+    [
+        {value: 'updated', name: 'atualização'},
+        {value: 'stars', name: 'estrelas'},
+        {value: 'forks', name: 'forks'},
+    ];
+
     const ordemOptions = [
         {value: 'asc', name:"Crescente"},
         {value: 'desc', name:"Decrescente"},
@@ -33,7 +39,8 @@ const Paggination = ({direction, sort, page, maxPage, per_page, submit, filter, 
     }
 
     const updateRepoTotal = async() => {
-        let number = await getRepoTotalNumber(filter, filterText)
+
+        let number =  filter !== 'language' ? await getRepoTotalNumber(filter, filterText) : await getRepoTotalNumberLanguage(filterText, language);
         setRepoTotal(number)
         setShowPaggination(Boolean(number));
     }
@@ -69,13 +76,13 @@ const Paggination = ({direction, sort, page, maxPage, per_page, submit, filter, 
                         />
                     </Row>
                     <Row>
-                        <SelectForm
+                        { filter !=='language' && (<SelectForm
                             label="Repositórios por página:"
                             name="per_page"
                             value={per_page}
                             options={numberOptions}
                             change={change}
-                        />
+                        />)}
                         <SelectForm
                             label="Página:"
                             name="page"
@@ -100,4 +107,5 @@ export default connect( state => ({
     submit: state.submit,
     filter: state.filter,
     filterText: state.filterText,
+    language: state.language,
 }) )(Paggination);

@@ -4,18 +4,35 @@ import { CardWrapper } from '../style'
 import SelectForm from '../SelectForm';
 
 import { connect } from 'react-redux';
-import { submitFilter, changeInput } from '../../Redux/Store/action'
+import { submitFilter } from '../../Redux/Store/action'
 
-const Filter = ({ filter, filterText, dispatch }) => {
+const Filter = ({ filter, filterText, dispatch, language }) => {
 
     const filterOptions = [
         {value: "orgs", name:'Organização'},
         {value: "users", name:'Usuário'},
+        {value: "language", name:'Linguagem'}
+    ]
+    const languageOptions = [
+        {value: "c", name:'C'},
+        {value: "c++", name:'C++'},
+        {value: "c#", name:'C#'},
+        {value: "css", name:'CSS'},
+        {value: "go", name:'Go'},
+        {value: "html", name:'HTML'},
+        {value: "java", name:'Java'},
+        {value: "javascript", name:'Javascript'},
+        {value: "php", name:'PHP'},
+        {value: "python", name:'Python'},
+        {value: "ruby", name:'Ruby'},
+        {value: "scala", name:'Scala'},
+        {value: "typescript", name:'Typescript'},
     ]
 
     const [value, setValue] = useState({
         filter: filter,
-        filterText: filterText
+        filterText: filterText,
+        language: language,
     })
 
     const submit = () => {
@@ -40,6 +57,15 @@ const Filter = ({ filter, filterText, dispatch }) => {
                     change={change}
                 />
 
+                { value.filter === 'language' &&(<SelectForm
+                    label="Linguagem:"
+                    name="language"
+                    value={value.laguage}
+                    options={languageOptions}
+                    change={change}
+                    style={{paddingLeft: "8px"}}
+                />)}
+
                 <WrapperInput>
                     <InputLabel htmlFor="filterText">
                         Pesquisar:
@@ -61,4 +87,4 @@ const Filter = ({ filter, filterText, dispatch }) => {
     )
 }
 
-export default connect( state => ({ filter: state.filter , filterText: state.filterText }) )(Filter);
+export default connect( state => ({ filter: state.filter , filterText: state.filterText, language: state.language }) )(Filter);

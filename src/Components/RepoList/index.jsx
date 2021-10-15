@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getRepoList } from '../../Services/api'
+import { getRepoList, getRepoListLanguage } from '../../Services/api'
 import RepoCards from '../RepoCards';
 import { connect } from 'react-redux';
 import { submitedFilter, updateState } from '../../Redux/Store/action'
@@ -15,6 +15,7 @@ const RepoList = ({
     direction,
     sort,
     per_page,
+    language,
     dispatch 
 }) => {
 
@@ -22,11 +23,22 @@ const RepoList = ({
     const [submited, setSubmited] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const pagginationParameter = `?per_page=${per_page}&page=${page}&sort=${sort}&direction=${direction}`
+    
+    const getListApi = () => {
+        
+        if(filter !== "language"){
+            let pagginationParameter = `?per_page=${per_page}&page=${page}&sort=${sort}&direction=${direction}`
+            return getRepoList(filter, filterText, pagginationParameter)
+        } else{
+            let pagginationParameter = `?start_page=${page}&sort=${sort}&order=${direction}&language=${language}`;
+            return getRepoListLanguage(filterText, pagginationParameter);
+        }
+
+    }
 
     const updateList = async () => {
         setLoading(true)
-        let newList = await getRepoList(filter, filterText, pagginationParameter);
+        let newList = await getListApi();
         setLoading(false)
         setList(newList);
         if(submit){
@@ -70,4 +82,5 @@ export default connect( state => ({
     direction: state.direction,
     sort: state.sort,
     per_page: state.per_page,
+    language: state.language,
 }) )(RepoList);

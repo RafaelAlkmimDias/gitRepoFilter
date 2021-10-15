@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const WrapperSelect = styled.div`
     padding: 0px 0px 8px 0px;
+    min-width: 115px;
     @media(max-width: 640px) {
         width: 100%;
         padding: 0px!important;

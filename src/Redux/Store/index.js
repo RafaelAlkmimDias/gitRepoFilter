@@ -9,6 +9,7 @@ const initialState = {
     maxPage: 1,
     direction: 'asc',
     sort: 'full_name',
+    language: 'c',
     per_page: 10,
 }
 
@@ -21,9 +22,11 @@ function reducer (state = initialState, action) {
         }
     }
     else if(action.type === 'SUBMIT_FILTER'){
+        let paggination = action.change.filter === 'language' ? {sort: 'updated'} : {sort: 'full_name'};
         return {
             ...state,
             ...action.change,
+            ...paggination,
             page: 1,
             submit: true
         }
